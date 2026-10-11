@@ -947,10 +947,12 @@ class Vectors:
         >>> Vectors.dense(1.0, 2.0)
         DenseVector([1.0, 2.0])
         """
+        vector_data: Union[bytes, np.ndarray, Iterable[float]]
         if len(elements) == 1 and not isinstance(elements[0], (float, int)):
-            # it's list, numpy.array or other iterable object.
-            elements = elements[0]  # type: ignore[assignment]
-        return DenseVector(cast(Iterable[float], elements))
+            vector_data = elements[0]
+        else:
+            vector_data = cast(Iterable[float], elements)
+        return DenseVector(vector_data)
 
     @staticmethod
     def squared_distance(v1: Vector, v2: Vector) -> np.float64:
